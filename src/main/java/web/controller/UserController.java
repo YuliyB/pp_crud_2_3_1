@@ -1,19 +1,19 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDao;
 import web.model.User;
 import web.service.UserService;
 
 @Controller
 @RequestMapping()
+@ComponentScan("service")
 public class UserController {
     private final UserService userService;
-    private UserDao userDao;
 
     @Autowired
     public UserController(UserService userService) {
@@ -21,13 +21,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/")
-    public String printUser(ModelMap modelMap){
+    public String printUsers(ModelMap modelMap){
         modelMap.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/new")
-    public String newUser(Model model){
+    public String newUserForm(Model model){
         User user = new User();
         model.addAttribute("user", user);
         return "new";
@@ -40,14 +40,14 @@ public class UserController {
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam(value = "id") int id, Model model) {
+    public String editUserForm(@RequestParam(value = "id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "/edit";
     }
 
     @PostMapping("/updateUser")
-    public String update(@ModelAttribute("user") User user, @RequestParam(value = "id") int oldId) {
-        userService.update(oldId, user);
+    public String update(@ModelAttribute("user") User user) {
+        userService.update(user);
         return "redirect:/";
     }
 

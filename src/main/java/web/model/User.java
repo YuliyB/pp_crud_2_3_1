@@ -83,12 +83,5 @@ public class User {
                 ", age=" + age +
                 '}';
     }
-
-
-    public void clone(User newUser) {
-        this.age = newUser.getAge();
-        this.name = newUser.getName();
-        this.lastName = newUser.getLastName();
-    }
 }
 

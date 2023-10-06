@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/updateUser(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/updateUser}" th:object="${user}">
+    <input readonly type="number" th:field="*{id}" id="id"/>
     <label for="name=">Enter name, lastname and age: </label>
     <input type="text" th:field="*{name}" id="name="/>
     <input type="text" th:field="*{lastName}" id="lastName="/>
