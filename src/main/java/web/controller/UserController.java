@@ -11,7 +11,7 @@ import web.service.UserService;
 
 @Controller
 @RequestMapping()
-@ComponentScan("service")
+@ComponentScan("web.service")
 public class UserController {
     private final UserService userService;
 
@@ -21,28 +21,28 @@ public class UserController {
     }
 
     @GetMapping(value = "/")
-    public String printUsers(ModelMap modelMap){
+    public String printUsers(ModelMap modelMap) {
         modelMap.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
     @GetMapping("/new")
-    public String newUserForm(Model model){
+    public String showNewUserForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "new";
     }
 
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute("user") User user){
+    public String createUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/";
     }
 
     @GetMapping("/edit")
-    public String editUserForm(@RequestParam(value = "id") int id, Model model) {
+    public String showEditUserForm(@RequestParam(value = "id") int id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "/edit";
+        return "edit";
     }
 
     @PostMapping("/updateUser")
